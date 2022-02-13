@@ -12,7 +12,7 @@ using Online_Book_Shop.Data;
 namespace Online_Book_Shop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220211132412_book_db")]
+    [Migration("20220212145333_book_db")]
     partial class book_db
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
