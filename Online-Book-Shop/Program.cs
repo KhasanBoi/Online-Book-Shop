@@ -1,5 +1,7 @@
+using DataLayer.Data;
+using DataLayer.Repository;
+using DataLayer.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
-using Online_Book_Shop.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+builder.Services.AddScoped<DataLayer.Repository.IRepository.IUnitofWork, DataLayer.Repository.UnitofWork>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 var app = builder.Build();
 

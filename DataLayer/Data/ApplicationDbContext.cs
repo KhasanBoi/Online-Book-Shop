@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Online_Book_Shop.Models;
+using ModelsLayer.Models;
 
-namespace Online_Book_Shop.Data
+namespace DataLayer.Data
 {
     public class ApplicationDbContext : DbContext
     {
