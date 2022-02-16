@@ -7,15 +7,15 @@ namespace Online_Book_Shop.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _db;
+        private readonly IUnitofWork unitofWork;
 
-        public CategoryController(ICategoryRepository db)
+        public CategoryController(IUnitofWork _unitofWork)
         {
-            _db = db;
+            unitofWork = _unitofWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.GetAll();
+            IEnumerable<Category> objCategoryList = unitofWork.Category.GetAll();
             return View(objCategoryList);
         }
         //GET
@@ -35,8 +35,8 @@ namespace Online_Book_Shop.Controllers
             }
             if(ModelState.IsValid)
             {
-                _db.Add(obj);
-                _db.Save(); // data goes to database and it saves all the changes
+                unitofWork.Category.Add(obj);
+                unitofWork.Save(); // data goes to database and it saves all the changes
                 TempData["success"] = "Category created successfully!";
                 return Redirect("Index");
             }
@@ -51,7 +51,7 @@ namespace Online_Book_Shop.Controllers
             {
                 return NotFound();
             }
-            var category = _db.GetFirstOrDefault(u => u.Id == id);
+            var category = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
             if(category == null)
             {
                 return NotFound();
@@ -71,8 +71,8 @@ namespace Online_Book_Shop.Controllers
             }
             if(ModelState.IsValid)
             {
-                _db.Update(obj);
-                _db.Save();
+                unitofWork.Category.Update(obj);
+                unitofWork.Save();
                 TempData["success"] = "Category updated successfully!";
                 return RedirectToAction("Index");
             }
@@ -86,7 +86,7 @@ namespace Online_Book_Shop.Controllers
             {
                 return NotFound();
             }
-            var category = _db.GetFirstOrDefault(u => u.Id == id);
+            var category = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -100,13 +100,13 @@ namespace Online_Book_Shop.Controllers
         [ValidateAntiForgeryToken] // to prevent cross-side request forgery attack
         public IActionResult DeletePost(int? id)
         {
-            var obj = _db.GetFirstOrDefault(u => u.Id == id);
+            var obj = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Remove(obj);
-            _db.Save();
+            unitofWork.Category.Remove(obj);
+            unitofWork.Save();
             TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");
         }

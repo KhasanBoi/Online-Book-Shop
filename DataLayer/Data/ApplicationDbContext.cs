@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModelsLayer;
 using ModelsLayer.Models;
 
 namespace DataLayer.Data
@@ -10,5 +11,6 @@ namespace DataLayer.Data
 
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CoverType> CoverType { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DataLayer.Data;
 using DataLayer.Repository.IRepository;
+using ModelsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +9,20 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repository
 {
-    public class UnitofWork : IUnitofWork
+    public class CoverTypeRepository : Repository<CoverType>, ICoverTypeRepository 
     {
         private ApplicationDbContext db;
-        public ICategoryRepository Category { get; private set; }
-        public ICoverTypeRepository CoverType { get; private set; }
-
-        public UnitofWork(ApplicationDbContext _db)
+        public CoverTypeRepository(ApplicationDbContext _db) : base(_db)
         {
             db = _db;
-            Category = new CategoryRepository(_db);
-            CoverType = new CoverTypeRepository(_db);
         }
-        
-
         public void Save()
         {
             db.SaveChanges();
+        }
+        public void Update(CoverType obj)
+        {
+            db.CoverType.Update(obj);
         }
     }
 }
