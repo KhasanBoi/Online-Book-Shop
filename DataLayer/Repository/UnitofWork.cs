@@ -17,8 +17,8 @@ namespace DataLayer.Repository
         public UnitofWork(ApplicationDbContext _db)
         {
             db = _db;
-            Category = new CategoryRepository(_db);
-            CoverType = new CoverTypeRepository(_db);
+            Category = new CategoryRepository(db);
+            CoverType = new CoverTypeRepository(db);
         }
         
 

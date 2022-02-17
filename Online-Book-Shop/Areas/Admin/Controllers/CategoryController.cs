@@ -5,6 +5,7 @@ using ModelsLayer.Models;
 
 namespace Online_Book_Shop.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitofWork unitofWork;
@@ -29,11 +30,11 @@ namespace Online_Book_Shop.Controllers
         [ValidateAntiForgeryToken] // to prevent cross-side request forgery attack
         public IActionResult Create(Category obj)
         {
-            if(obj.Name == obj.DisplayOrder.ToString())
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("CustomError", "Invalid name or display order");
             }
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 unitofWork.Category.Add(obj);
                 unitofWork.Save(); // data goes to database and it saves all the changes
@@ -41,18 +42,18 @@ namespace Online_Book_Shop.Controllers
                 return Redirect("Index");
             }
             return View(obj);
-            
+
         }
 
         //GET
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
             var category = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }
@@ -69,7 +70,7 @@ namespace Online_Book_Shop.Controllers
             {
                 ModelState.AddModelError("CustomError", "Invalid name or display order");
             }
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 unitofWork.Category.Update(obj);
                 unitofWork.Save();
