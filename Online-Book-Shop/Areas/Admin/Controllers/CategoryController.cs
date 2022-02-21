@@ -41,8 +41,8 @@ namespace Online_Book_Shop.Controllers
                 TempData["success"] = "Category created successfully!";
                 return Redirect("Index");
             }
-            return View(obj);
 
+            return View(obj);
         }
 
         //GET
@@ -52,13 +52,12 @@ namespace Online_Book_Shop.Controllers
             {
                 return NotFound();
             }
-            var category = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
-            if (category == null)
+            var categoryFromDb = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
+            if (categoryFromDb == null)
             {
                 return NotFound();
             }
-
-            return View(id);
+            return View(categoryFromDb);
         }
 
         //POST
@@ -74,10 +73,9 @@ namespace Online_Book_Shop.Controllers
             {
                 unitofWork.Category.Update(obj);
                 unitofWork.Save();
-                TempData["success"] = "Category updated successfully!";
-                return RedirectToAction("Index");
+               // return RedirectToAction("Index");
             }
-            return View();
+            return View(obj);
         }
 
         //GET
@@ -87,13 +85,13 @@ namespace Online_Book_Shop.Controllers
             {
                 return NotFound();
             }
-            var category = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
-            if (category == null)
+            var categoryFromDb = unitofWork.Category.GetFirstOrDefault(u => u.Id == id);
+            if (categoryFromDb == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(categoryFromDb);
         }
 
         //POST
@@ -108,7 +106,6 @@ namespace Online_Book_Shop.Controllers
             }
             unitofWork.Category.Remove(obj);
             unitofWork.Save();
-            TempData["success"] = "Category deleted successfully!";
             return RedirectToAction("Index");
         }
     }

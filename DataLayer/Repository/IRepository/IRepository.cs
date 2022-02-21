@@ -9,8 +9,8 @@ namespace DataLayer.Repository.IRepository
 {
     public interface IRepository<T> where T : class // T can be any class in this way
     {
-        T GetFirstOrDefault(Expression<Func<T, bool>> filter);
-        IEnumerable<T> GetAll();
+        T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProps = null);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProps = null);
         void Add(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity);

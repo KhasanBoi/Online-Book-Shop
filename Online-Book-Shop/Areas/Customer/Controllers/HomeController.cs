@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataLayer.Migrations;
+using DataLayer.Repository;
+using DataLayer.Repository.IRepository;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Online_Book_Shop.Controllers
@@ -7,15 +10,24 @@ namespace Online_Book_Shop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitofWork unitofWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitofWork _unitofWork)
         {
             _logger = logger;
+            unitofWork = _unitofWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<ModelsLayer.Product> productList = unitofWork.Product.GetAll(includeProps: "Category,CoverType");
+            return View(productList);
+        }
+
+        public IActionResult Details(int id)
+        {
+            ModelsLayer.Product product = unitofWork.Product.GetFirstOrDefault(u=> u.Id==id, includeProps: "Category,CoverType");
+            return View(product);
         }
 
         public IActionResult Privacy()

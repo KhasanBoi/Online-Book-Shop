@@ -1,5 +1,6 @@
 ﻿using DataLayer.Data;
 using DataLayer.Repository.IRepository;
+using ModelsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace DataLayer.Repository
         private ApplicationDbContext db;
         public ICategoryRepository Category { get; private set; }
         public ICoverTypeRepository CoverType { get; private set; }
+        public IProductRepository Product { get; private set; }
 
         public UnitofWork(ApplicationDbContext _db)
         {
             db = _db;
             Category = new CategoryRepository(db);
             CoverType = new CoverTypeRepository(db);
+            Product = new ProductRepository(db);
         }
         
 
